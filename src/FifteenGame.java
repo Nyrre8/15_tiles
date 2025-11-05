@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class FifteenGame extends JFrame implements ActionListener {
     JButton[] buttonArray = new JButton[16]; // Creating an array that holds 16 JButtons
@@ -18,6 +20,7 @@ public class FifteenGame extends JFrame implements ActionListener {
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(4, 4));
         JButton newGameButton = new JButton("New Game");
+        newGameButton.addActionListener(e -> shuffleButtons());
 
         // Using a for-loop for naming the buttons that are added to the GridLayout.
         for (int i = 0; i < buttonArray.length; i++) {
@@ -39,7 +42,7 @@ public class FifteenGame extends JFrame implements ActionListener {
     //Setting upp what actionPerformed should do.
 
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource(); // e.GetSource() returns object. Cast to JButton next.
+        Object source = e.getSource(); // e.getSource() returns object. Cast to JButton next.
         JButton clickedButton = (JButton) source;
 
         //Creating logic to see if it's next to the empty JButton.
@@ -82,6 +85,28 @@ public class FifteenGame extends JFrame implements ActionListener {
 
         }
 
+
+    }
+
+    private void shuffleButtons() {
+        //Creating an ArrayList to be able to use Collections.shuffle
+        ArrayList<String> textButtons = new ArrayList<>();
+        //adding the buttonArray to the ArrayList
+
+        for (int i = 0; i < buttonArray.length; i++) {
+            textButtons.add(buttonArray[i].getText());
+        }
+        //Shuffling the buttons
+        Collections.shuffle(textButtons);
+        //For every iteration in buttonArray, setText from textButtons(i)(which are shuffled):
+        for (int i = 0; i < buttonArray.length; i++) {
+            buttonArray[i].setText(textButtons.get(i));
+
+            if (textButtons.get(i).equals("")) {
+                emptyIndex = i;
+            }
+
+        }
 
     }
 
