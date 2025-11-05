@@ -8,7 +8,7 @@ import java.util.Collections;
 public class FifteenGame extends JFrame implements ActionListener {
     JButton[] buttonArray = new JButton[16]; // Creating an array that holds 16 JButtons
     int emptyIndex = 15; // Setting emptyIndex to 15, since that is where
-    // it is when the progarm starts.
+    // it is when the program starts.
 
     public FifteenGame() {
 
@@ -80,13 +80,16 @@ public class FifteenGame extends JFrame implements ActionListener {
                     //Replace emptyIndex with new empty at i.
                     emptyIndex = i;
                 }
-
+                break;
             }
 
         }
-
+        if (isGameWon()) {
+            JOptionPane.showMessageDialog(this, "Congratulations, you won!");
+        }
 
     }
+
 
     private void shuffleButtons() {
         //Creating an ArrayList to be able to use Collections.shuffle
@@ -107,6 +110,24 @@ public class FifteenGame extends JFrame implements ActionListener {
             }
 
         }
+
+    }
+
+    private boolean isGameWon() {
+
+        for (int i = 0; i < buttonArray.length - 1; i++) {
+            String expected = String.valueOf(i + 1);
+            String actual = buttonArray[i].getText();
+
+            if (!expected.equals(actual)) {
+                return false;
+            }
+
+        }
+        if (!buttonArray[15].getText().equals("")) {
+            return false;
+        }
+        return true;
 
     }
 
